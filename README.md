@@ -5,7 +5,7 @@
 
 <p align="center"><a href="https://clawdman.vercel.app">clawdman.vercel.app</a> · <a href="docs/clawdman.mp4">watch the tour</a></p>
 
-<p align="center"><a href="docs/clawdman.mp4"><img src="docs/clawdman-poster.jpg" alt="Watch the 37 second Clawdman tour" width="100%"></a></p>
+<p align="center"><a href="docs/clawdman.mp4"><img src="docs/tour-poster.jpg" alt="Watch the 37 second Clawdman tour" width="100%"></a></p>
 <p align="center"><sub>&#9654; Watch the 37-second tour. Every picture of the meadow in it is rendered by the plugin's own engine.</sub></p>
 
 
