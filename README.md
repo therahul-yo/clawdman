@@ -78,6 +78,8 @@ Clawdman's meadow is an actual image, so your terminal has to be one that can sh
 { "env": { "CLAUDE_CODE_FORCE_TERMINAL_IMAGES": "1" } }
 ```
 
+Then **restart Claude Code** so it reads the setting, and run `/clawdman status`. If it says `renderer image`, you're done.
+
 No image support? Clawdman shows up in **blocks** instead: same guy, chunkier meadow, a bit more "I was drawn in 1987." He still waves.
 
 ## Commands
