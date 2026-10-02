@@ -416,3 +416,20 @@ test('the frame key says whether a picture is new without drawing it', () => {
   // and it is the key the finished frame carries
   expect(imageFrame(clawd, 100, 'dots', { friends: 2, time: 1 }).key).toBe(a)
 })
+
+test('a refused call answers its request once: its end afterwards leaves an identical pending request open', () => {
+  const asks = new Asks()
+  const input = { command: 'ls' }
+
+  // two identical Bash calls wait; the person refuses the first, and that call then ends
+  asks.request(undefined, 'Bash', input)
+  asks.request(undefined, 'Bash', input)
+  asks.denied(undefined, 'Bash', input, 'call-a')
+  expect(asks.isOpen).toBe(true)
+  asks.finished(undefined, 'Bash', input, 'call-a')
+  expect(asks.isOpen).toBe(true)
+
+  // the second call finishing answers the second request
+  asks.finished(undefined, 'Bash', input, 'call-b')
+  expect(asks.isOpen).toBe(false)
+})

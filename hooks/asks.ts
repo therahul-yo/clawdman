@@ -18,6 +18,9 @@ export function stable(value: unknown): string {
 export class Asks {
   // how many requests are open under each key: two identical commands waiting at once are two requests
   private open = new Map<string, number>()
+  // calls the person refused, by their id: the refusal answered the request already, and the call
+  // still ends afterwards, which must not answer a second request of the same kind
+  private refused = new Set<string>()
 
   private call(agent: string | undefined, tool: string, input: unknown): string {
     return `call|${agent ?? ''}|${tool}|${stable(input)}`
@@ -49,17 +52,26 @@ export class Asks {
     this.open.set(this.notice(agent), 1)
   }
 
-  /** The person refused the tool: one request of that kind is answered, and so is that agent's notification. */
-  denied(agent: string | undefined, tool: string, input?: unknown): void {
+  /**
+   * The person refused the tool: one request of that kind is answered, and so is that agent's notification.
+   * With the call's id, the end of that same call afterwards answers nothing more.
+   */
+  denied(agent: string | undefined, tool: string, input?: unknown, callId?: string): void {
     this.drop(this.call(agent, tool, input))
     this.open.delete(this.notice(agent))
+    if (callId !== undefined) {
+      if (this.refused.size > 200) this.refused.clear()
+      this.refused.add(callId)
+    }
   }
 
   /**
    * A tool call finished, so one request of its own kind (if it had one) is answered, and so is the
    * agent's notification, which names no call. Other calls' requests stay open, even identical ones.
    */
-  finished(agent: string | undefined, tool: string, input?: unknown): void {
+  finished(agent: string | undefined, tool: string, input?: unknown, callId?: string): void {
+    // a refused call was answered when it was refused
+    if (callId !== undefined && this.refused.delete(callId)) return
     this.drop(this.call(agent, tool, input))
     this.open.delete(this.notice(agent))
   }
@@ -75,5 +87,6 @@ export class Asks {
   /** Nothing is waiting any more, for any agent. */
   clear(): void {
     this.open.clear()
+    this.refused.clear()
   }
 }

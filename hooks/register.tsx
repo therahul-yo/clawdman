@@ -573,7 +573,7 @@ export const register: Register = on => {
       result = await next(e)
     } finally {
       // the call has ended, however it ended, so whatever it asked for is answered
-      asks.finished(e.agentId, e.tool, input)
+      asks.finished(e.agentId, e.tool, input, e.tool_use_id)
       if (asks.isOpen) seen.openAfterCall += 1
       syncAsking()
     }
@@ -605,7 +605,7 @@ export const register: Register = on => {
     seen.denials += 1
     if (refused.size > 200) refused.clear()
     refused.add(e.tool_use_id)
-    asks.denied(e.agent_id, e.tool_name, e.tool_input)
+    asks.denied(e.agent_id, e.tool_name, e.tool_input, e.tool_use_id)
     syncAsking()
 
     return next(e)
