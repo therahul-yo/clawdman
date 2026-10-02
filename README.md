@@ -3,20 +3,17 @@
 
 <p align="center"><em>a tiny orange guy who lives on top of your prompt box and has opinions.</em></p>
 
-<p align="center"><a href="https://clawdman.vercel.app">clawdman.vercel.app</a> · <a href="docs/clawdman.mp4">watch the tour</a></p>
+<p align="center"><a href="https://clawdman.vercel.app">clawdman.vercel.app</a> · <a href="https://clawdman.vercel.app/#watch">watch the tour</a></p>
 
-<p align="center"><a href="docs/clawdman.mp4"><img src="docs/tour.jpg" alt="Watch the 37 second Clawdman tour" width="100%"></a></p>
-<p align="center"><sub>&#9654; Watch the 37-second tour. Every picture of the meadow in it is rendered by the plugin's own engine.</sub></p>
-
-<p align="center"><img src="docs/clawdman-walk.gif" alt="Clawdman walking across the dotted meadow at night" width="100%"></p>
-<p align="center"><sub>He really does walk. Click the ground and he walks over there.</sub></p>
+<p align="center"><a href="https://clawdman.vercel.app/#watch"><img src="docs/tour.jpg" alt="Watch the 37 second Clawdman tour" width="100%"></a></p>
+<p align="center"><sub>&#9654; Watch the 37-second tour on the site. Every picture of the meadow in it is rendered by the plugin's own engine.</sub></p>
 
 
 <p align="center"><img src="docs/scene-night.png" alt="Night: a village of changed files and a done bubble" width="100%"></p>
 <p align="center"><sub>Night: a house for every changed file, and how long the turn took.</sub></p>
 
-<p align="center"><img src="docs/scene-day.png" alt="Day: Clawdman waving a needs you bubble" width="100%"></p>
-<p align="center"><sub>Day: the sun is out, and Clawdman waves when Claude needs an approval.</sub></p>
+<p align="center"><img src="docs/scene-day.png" alt="Day: the sun is out and a house stands for each changed file" width="100%"></p>
+<p align="center"><sub>Day: the sun is out, and six changed files make six houses.</sub></p>
 
 <p align="center"><img src="docs/scene-dusk.png" alt="Dusk: a low amber sun and a context warning" width="100%"></p>
 <p align="center"><sub>Dusk: a low sun, stars, and a warning when the context window fills.</sub></p>
@@ -40,7 +37,7 @@ Now there's **Clawdman**: a little orange mascot walking around a dotted, moonli
 | Claude is **editing files** | opens a laptop and types with great confidence |
 | Claude is **running commands** | moves to a big desktop. serious business. |
 | Claude is **reading stuff** | looks around suspiciously |
-| Claude **needs your approval** | stops everything, waves, points, and holds up a bubble that says **NEEDS YOU**. he will not drop it. |
+| Claude **needs your approval** | stops everything, waves, points, and holds up a **NEEDS YOU** bubble. Claude Code draws its own permission dialog on top of the meadow, so he does this where nobody can see. he's very proud of it anyway. |
 | a turn finishes | cheers, and tells you how long it took (`DONE 42S`) so you can feel something about it |
 | a tool fails | facepalms. he has seen things. |
 | **subagents** are running | a tiny helper Clawdman appears at their own little desk, one per subagent. when the row gets crowded the desks squeeze together and a `+N` bubble counts the ones that don't fit. it's an office now. |
