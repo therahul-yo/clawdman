@@ -628,3 +628,15 @@ test('desks stand 36 apart while there is room, then closer, and the rest are co
   expect(differs(twenty.pixels, sixty.pixels) > 0).toBe(true)
   expect(differs(twenty.pixels, imagePixels(clawd, 60, 'dots', { friends: 0 }).pixels) > 1500).toBe(true)
 })
+
+test('the first tool decides the desk even while Clawd is still walking to it', () => {
+  // a random source that always picks the desktop first
+  const clawd = new Companion(() => 0)
+  settle(clawd)
+  clawd.setWorking(true)
+  clawd.setActivity('write') // Claude is editing a file: the laptop, not the desktop that was picked
+  for (let t = 0; clawd.state !== 'emote' && t < 20; t += 0.04) clawd.step(0.04, WIDTH, imageRoom('dots'), IMAGE.pxPerCol)
+
+  expect(clawd.state).toBe('emote')
+  expect(clawd.current().name).toBe('Laptop')
+})

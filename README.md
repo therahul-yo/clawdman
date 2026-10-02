@@ -3,6 +3,10 @@
 
 <p align="center"><em>a tiny orange guy who lives on top of your prompt box and has opinions.</em></p>
 
+<p align="center"><a href="docs/clawdman.mp4"><img src="docs/clawdman-poster.jpg" alt="Watch the 25 second Clawdman video" width="100%"></a></p>
+<p align="center"><sub>&#9654; Watch the 25-second tour. Every picture of the meadow in it is rendered by the plugin's own engine.</sub></p>
+
+
 <p align="center"><img src="docs/scene-night.png" alt="Night: a village of changed files and a done bubble" width="100%"></p>
 <p align="center"><sub>Night: a house for every changed file, and how long the turn took.</sub></p>
 

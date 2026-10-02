@@ -345,6 +345,11 @@ export class Companion {
       if (!this.fits(desk) || this.deskKind === desk) return
       this.deskKind = desk
       if (this.state === 'emote' && this.deskMove !== desk) this.leaveDesk()
+      else if (this.state === 'walk' && this.afterWalk && this.deskMove !== desk) {
+        // still on the way to the desk: head for the right one instead
+        this.deskMove = desk
+        this.flourishAt(desk)
+      }
 
       return
     }
