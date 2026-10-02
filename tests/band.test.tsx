@@ -66,3 +66,12 @@ test('the band stays out of the way of a survey and of a narrow terminal', async
   expect(await narrow.find({ type: 'Image' })).toBeUndefined()
   await narrow.unmount()
 })
+
+test('the picture has a text alternative for anyone who cannot see it', async ($, on) => {
+  mock.env(on, { TERM_PROGRAM: 'ghostty' })
+  const ui = await $.ui.mount({ plugin: 'clawdman', surface: 'terminal', ...BAND })
+  const picture = await ui.find({ type: 'Image' })
+
+  expect(picture?.props.alt).toBe('Clawd, a small orange mascot')
+  await ui.unmount()
+})

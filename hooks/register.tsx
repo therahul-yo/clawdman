@@ -133,6 +133,8 @@ export const register: Register = on => {
     // a few words above Clawd for a while
     bubble: undefined as { text: string; tone: BubbleTone } | undefined,
     bubbleLeft: 0,
+    // usage warnings that came in while another warning was on screen: each one is shown in turn
+    warnings: [] as string[],
     // when the person's last prompt went in, for how long the turn took
     turnStartedAt: 0,
     // a usage warning is said once until the number drops back
@@ -179,6 +181,22 @@ export const register: Register = on => {
   const say = (text: string, tone: BubbleTone = 'plain', seconds = 4) => {
     band.bubble = { text, tone }
     band.bubbleLeft = seconds
+  }
+  /** A usage warning waits its turn behind a warning that is still on screen, so none goes unseen. */
+  const sayWarning = (text: string) => {
+    if (band.bubble?.tone === 'warn' && band.bubbleLeft > 0) band.warnings.push(text)
+    else say(text, 'warn', 6)
+  }
+  const nextWarning = () => {
+    const text = band.warnings.shift()
+    if (text !== undefined) say(text, 'warn', 6)
+  }
+  /** what the picture says for anyone who cannot see it */
+  const altText = () => {
+    if (clawd.isAsking) return 'Clawd: Claude needs you'
+    const said = band.bubbleLeft > 0 ? band.bubble?.text : undefined
+
+    return said ? `Clawd: ${said}` : 'Clawd, a small orange mascot'
   }
   /** what the picture shows besides Clawd and the fixed scenery */
   const extras = () => ({
@@ -264,7 +282,10 @@ export const register: Register = on => {
         band.time += dt
         if (band.bubbleLeft > 0) {
           band.bubbleLeft -= dt
-          if (band.bubbleLeft <= 0) band.bubble = undefined
+          if (band.bubbleLeft <= 0) {
+            band.bubble = undefined
+            nextWarning()
+          }
         }
         if (now - polls.hour >= 60_000) {
           polls.hour = now
@@ -297,13 +318,13 @@ export const register: Register = on => {
           // a warning is said once per crossing
           if (used.context >= 0.9 && !band.isContextWarned) {
             band.isContextWarned = true
-            say(`context ${Math.round(used.context * 100)}%`, 'warn', 6)
+            sayWarning(`context ${Math.round(used.context * 100)}%`)
           } else if (used.context < 0.8) {
             band.isContextWarned = false
           }
           if (used.limit >= 0.85 && !band.isLimitWarned) {
             band.isLimitWarned = true
-            say(`limit ${Math.round(used.limit * 100)}%`, 'warn', 6)
+            sayWarning(`limit ${Math.round(used.limit * 100)}%`)
           } else if (used.limit < 0.75) {
             band.isLimitWarned = false
           }
@@ -596,6 +617,7 @@ export const register: Register = on => {
     // a new turn starts clean: no bubble or gestures left from the last one
     band.bubble = undefined
     band.bubbleLeft = 0
+    nextWarning()
     clawd.newTurn()
     band.turnStartedAt = await clockNow($)
 
@@ -675,7 +697,7 @@ export const register: Register = on => {
       return (
         <Box flexDirection="column">
           <Box height={IMAGE.rows}>
-            <Image key={pictureKey()} source={frame.source} columns={wide} rows={IMAGE.rows} alt=" " />
+            <Image key={pictureKey()} source={frame.source} columns={wide} rows={IMAGE.rows} alt={altText()} />
             {!seen.noPointer && (
               <Box position="absolute" top={0} left={0}>
                 <Client key="pointer" module="./pointer.tsx" width={wide} height={IMAGE.rows} />
