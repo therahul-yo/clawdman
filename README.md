@@ -1,8 +1,18 @@
-# 🦀 Clawdman
+<h1><img src="docs/icon-128.png" alt="" width="64" height="64" align="center">&nbsp;Clawdman</h1>
 
 *a tiny orange guy who lives on top of your prompt box and has opinions.*
 
-![Clawdman in four moods](docs/preview.png)
+<p align="center"><img src="docs/scene-night.png" alt="Night: a village of changed files and a done bubble" width="100%"></p>
+<p align="center"><sub>Night: a house for every changed file, and how long the turn took.</sub></p>
+
+<p align="center"><img src="docs/scene-day.png" alt="Day: Clawd waving a needs you bubble" width="100%"></p>
+<p align="center"><sub>Day: the sun is out, and Clawd waves when Claude needs an approval.</sub></p>
+
+<p align="center"><img src="docs/scene-dusk.png" alt="Dusk: a low amber sun and a context warning" width="100%"></p>
+<p align="center"><sub>Dusk: a low sun, stars, and a warning when the context window fills.</sub></p>
+
+<p align="center"><img src="docs/scene-team.png" alt="Three subagents at their own desks, and a stretch bubble" width="100%"></p>
+<p align="center"><sub>A desk for every subagent, and a stretch after a long session.</sub></p>
 
 Your terminal was a lonely place. Just you, a blinking cursor, and a language model that never says "good morning."
 
