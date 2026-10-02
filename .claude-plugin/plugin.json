@@ -15,5 +15,6 @@
     "ui",
     "mod"
   ],
-  "displayName": "Clawdman"
+  "displayName": "Clawdman",
+  "license": "MIT"
 }

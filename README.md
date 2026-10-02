@@ -34,9 +34,20 @@ Now there's **Clawd**: the Claude desktop app's little mascot, walking around a 
 
 ## Putting him on your terminal
 
+From the marketplace in this repo:
+
+```
+claude plugin marketplace add therahul-yo/clawdman
+claude plugin install clawdman@clawdman
+```
+
+Or straight from a local copy:
+
 ```
 claude --plugin-dir /path/to/clawdman
 ```
+
+Needs Claude Code 2.1.287 or newer (that's when mods arrived).
 
 Clawd's meadow is an actual image, so your terminal has to be one that can show images (Ghostty, kitty, WezTerm and Herdr all can). Claude Code is shy about drawing them unless you say it's okay, so add this once to `~/.claude/settings.json`:
 
@@ -80,3 +91,7 @@ That's a pull request away.
 - 54 tests: `claude plugin test .` · validate with `claude plugin validate .`
 
 *Made with dots, mild obsession, and a deep fear of empty space above a prompt box.*
+
+## License
+
+MIT for the code (see `LICENSE`). Clawd himself, his sprites and his animations come from the Claude desktop app and aren't covered by that license.
