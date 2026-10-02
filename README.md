@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/icon-128.png" alt="Clawd, a small orange mascot" width="96" height="96"></p>
+<p align="center"><img src="docs/icon-128.png" alt="Clawd, a small orange mascot in a red cape" width="96" height="96"></p>
 <h1 align="center">Clawdman</h1>
 
 <p align="center"><em>a tiny orange guy who lives on top of your prompt box and has opinions.</em></p>
