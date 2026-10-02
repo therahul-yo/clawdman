@@ -16,7 +16,8 @@ export function stable(value: unknown): string {
 }
 
 export class Asks {
-  private open = new Set<string>()
+  // how many requests are open under each key: two identical commands waiting at once are two requests
+  private open = new Map<string, number>()
 
   private call(agent: string | undefined, tool: string, input: unknown): string {
     return `call|${agent ?? ''}|${tool}|${stable(input)}`
@@ -26,6 +27,12 @@ export class Asks {
     return `notice|${agent ?? ''}`
   }
 
+  private drop(key: string): void {
+    const n = (this.open.get(key) ?? 0) - 1
+    if (n > 0) this.open.set(key, n)
+    else this.open.delete(key)
+  }
+
   /** Whether anything is waiting for the person. */
   get isOpen(): boolean {
     return this.open.size > 0
@@ -33,38 +40,39 @@ export class Asks {
 
   /** A permission request for `tool` with `input`, from the main agent (`agent` undefined) or a subagent. */
   request(agent: string | undefined, tool: string, input?: unknown): void {
-    this.open.add(this.call(agent, tool, input))
+    const key = this.call(agent, tool, input)
+    this.open.set(key, (this.open.get(key) ?? 0) + 1)
   }
 
   /** A notification that says an agent needs the person, with no tool named. */
   notify(agent?: string): void {
-    this.open.add(this.notice(agent))
+    this.open.set(this.notice(agent), 1)
   }
 
-  /** The person refused the tool: its request is answered, and so is that agent's notification. */
+  /** The person refused the tool: one request of that kind is answered, and so is that agent's notification. */
   denied(agent: string | undefined, tool: string, input?: unknown): void {
-    this.open.delete(this.call(agent, tool, input))
+    this.drop(this.call(agent, tool, input))
     this.open.delete(this.notice(agent))
   }
 
   /**
-   * A tool call finished, so its own request (if it had one) is answered, and so is the agent's
-   * notification, which names no call. Other calls' requests stay open.
+   * A tool call finished, so one request of its own kind (if it had one) is answered, and so is the
+   * agent's notification, which names no call. Other calls' requests stay open, even identical ones.
    */
   finished(agent: string | undefined, tool: string, input?: unknown): void {
-    this.open.delete(this.call(agent, tool, input))
+    this.drop(this.call(agent, tool, input))
     this.open.delete(this.notice(agent))
   }
 
   /** An agent's turn ended: nothing of its is waiting any more. */
   clearAgent(agent: string | undefined): void {
-    const mark = `|${agent ?? ''}|`
-    for (const key of [...this.open]) {
-      if (key.startsWith(`call${mark}`) || key === this.notice(agent)) this.open.delete(key)
+    const mark = `call|${agent ?? ''}|`
+    for (const key of [...this.open.keys()]) {
+      if (key.startsWith(mark) || key === this.notice(agent)) this.open.delete(key)
     }
   }
 
-  /** A new prompt: nothing is waiting any more. */
+  /** Nothing is waiting any more, for any agent. */
   clear(): void {
     this.open.clear()
   }

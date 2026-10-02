@@ -374,3 +374,33 @@ test('subagents are drawn a hair smaller and keep the same colours as the main C
   }
   expect(count(three) > count(alone) + 600).toBe(true)
 })
+
+test('two identical requests are two requests, and a new prompt leaves a waiting subagent alone', () => {
+  const asks = new Asks()
+  const pwd = { command: 'pwd' }
+
+  asks.request(undefined, 'Bash', pwd)
+  asks.request(undefined, 'Bash', pwd)
+  asks.finished(undefined, 'Bash', pwd)
+  expect(asks.isOpen).toBe(true) // the second one still waits
+  asks.finished(undefined, 'Bash', pwd)
+  expect(asks.isOpen).toBe(false)
+  // finishing a call that never asked changes nothing
+  asks.finished(undefined, 'Bash', pwd)
+  expect(asks.isOpen).toBe(false)
+
+  // a refusal answers one of two identical requests
+  asks.request(undefined, 'Bash', pwd)
+  asks.request(undefined, 'Bash', pwd)
+  asks.denied(undefined, 'Bash', pwd)
+  expect(asks.isOpen).toBe(true)
+
+  // the main agent's new prompt clears the main agent's requests only
+  asks.clear()
+  asks.request(undefined, 'Edit', { file: 'a.ts' })
+  asks.request('child', 'Write', { file: 'b.ts' })
+  asks.clearAgent(undefined)
+  expect(asks.isOpen).toBe(true)
+  asks.finished('child', 'Write', { file: 'b.ts' })
+  expect(asks.isOpen).toBe(false)
+})

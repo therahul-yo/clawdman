@@ -587,7 +587,8 @@ export const register: Register = on => {
     return next(e)
   })
   on('prompt.submit', async ($, e, next) => {
-    asks.clear()
+    // the new prompt answers what the main agent asked; a background subagent may still be waiting
+    asks.clearAgent(undefined)
     syncAsking()
     // a new turn starts clean: no bubble or gestures left from the last one
     band.bubble = undefined
