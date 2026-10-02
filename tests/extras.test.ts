@@ -3,7 +3,7 @@ import { expect, test } from 'claude-code/testing'
 import { Asks, stable } from '../hooks/asks'
 import { Companion, sprite } from '../hooks/engine'
 import { REFUSALS_BEFORE_BLOCKS, shouldUseBlocks } from '../hooks/fallback'
-import { IMAGE, SUBAGENT_SCALE, extrasKey, imagePixels, imageRoom, phaseOf, skyOf } from '../hooks/render'
+import { IMAGE, SUBAGENT_SCALE, frameKey, imageFrame, extrasKey, imagePixels, imageRoom, phaseOf, skyOf } from '../hooks/render'
 import { encodeIndexedPng } from '../hooks/png'
 import { countChanges, shortDuration } from '../hooks/village'
 
@@ -403,4 +403,16 @@ test('two identical requests are two requests, and a new prompt leaves a waiting
   expect(asks.isOpen).toBe(true)
   asks.finished('child', 'Write', { file: 'b.ts' })
   expect(asks.isOpen).toBe(false)
+})
+
+test('the frame key says whether a picture is new without drawing it', () => {
+  const clawd = new Companion(seeded(2))
+  settle(clawd)
+  const a = frameKey(clawd, 100, 'dots', { friends: 2, time: 1 })
+
+  expect(frameKey(clawd, 100, 'dots', { friends: 2, time: 1 })).toBe(a)
+  expect(frameKey(clawd, 100, 'dots', { friends: 3, time: 1 }) === a).toBe(false)
+  expect(frameKey(clawd, 100, 'pixels', { friends: 2, time: 1 }) === a).toBe(false)
+  // and it is the key the finished frame carries
+  expect(imageFrame(clawd, 100, 'dots', { friends: 2, time: 1 }).key).toBe(a)
 })

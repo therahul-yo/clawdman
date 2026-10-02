@@ -830,9 +830,15 @@ export function imagePixels(
   return { pixels, width, height, palette }
 }
 
-export function imageFrame(c: Companion, columns: number, style: SceneStyle = 'dots', extras: Extras = {}): ImageFrame {
+/** What the picture shows, as a short key: equal keys are equal pictures, and it costs next to nothing. */
+export function frameKey(c: Companion, columns: number, style: SceneStyle = 'dots', extras: Extras = {}): string {
   const { name, frame } = c.current()
-  const key = `${style}:${name}:${frame}:${c.facing}:${Math.round(c.x)}:${imageColumns(columns)}:${extrasKey(extras)}`
+
+  return `${style}:${name}:${frame}:${c.facing}:${Math.round(c.x)}:${imageColumns(columns)}:${extrasKey(extras)}`
+}
+
+export function imageFrame(c: Companion, columns: number, style: SceneStyle = 'dots', extras: Extras = {}): ImageFrame {
+  const key = frameKey(c, columns, style, extras)
   const { pixels, width, height, palette } = imagePixels(c, columns, style, extras)
 
   return { key, source: { png: base64(encodeIndexedPng(pixels, width, height, palette)) } }

@@ -15,6 +15,7 @@ import {
   imageRoom,
   blockCells,
   imageColumns,
+  frameKey,
   imageFrame,
   setFit,
   walkColumns,
@@ -323,8 +324,10 @@ export const register: Register = on => {
 
         if (isImage) {
           if (now < holdUntil) return
+          // the key is cheap: only a picture that is new, and not too soon, is drawn and compressed
+          const key = frameKey(clawd, band.columns, band.style, extras())
+          if (key === lastKey || now - lastBlitAt < MIN_FRAME_MS) return
           const frame = imageFrame(clawd, band.columns, band.style, extras())
-          if (frame.key === lastKey || now - lastBlitAt < MIN_FRAME_MS) return
           lastKey = frame.key
           lastBlitAt = now
           seen.blits += 1
