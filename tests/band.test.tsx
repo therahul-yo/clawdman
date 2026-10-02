@@ -30,7 +30,7 @@ test('tmux and unknown terminals get the block version', async ($, on) => {
   await ui.unmount()
 })
 
-test('the band draws Clawd on the terminal', async $ => {
+test('the band draws Clawdman on the terminal', async $ => {
   const ui = await $.ui.mount({ plugin: 'clawdman', surface: 'terminal', ...BAND })
   const picture = (await ui.find({ type: 'Image' })) ?? (await ui.find({ type: 'Raster' }))
 
@@ -72,6 +72,6 @@ test('the picture has a text alternative for anyone who cannot see it', async ($
   const ui = await $.ui.mount({ plugin: 'clawdman', surface: 'terminal', ...BAND })
   const picture = await ui.find({ type: 'Image' })
 
-  expect(picture?.props.alt).toBe('Clawd, a small orange mascot')
+  expect(picture?.props.alt).toBe('Clawdman, a small orange mascot')
   await ui.unmount()
 })

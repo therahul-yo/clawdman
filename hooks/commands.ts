@@ -17,14 +17,14 @@ export type Command =
 export const WORDS = ['on', 'off', 'dots', 'pixels', 'style', 'village', 'break', 'fit', 'renderer', 'status', 'help'] as const
 
 export const HELP = [
-  '/clawdman              turn Clawd on or off',
+  '/clawdman              turn Clawdman on or off',
   '/clawdman on | off     show or hide him',
   '/clawdman dots | pixels   the dotted or the solid pixel scenery',
   '/clawdman village on | off   a house for every changed file',
   '/clawdman break 50 | off   minutes of Claude working before a stretch',
   '/clawdman renderer image | blocks | auto   pictures, blocks, or let the terminal decide',
   '/clawdman fit 1.035    line the scenery up with the prompt box edges',
-  '/clawdman status       what Clawd sees right now',
+  '/clawdman status       what Clawdman sees right now',
   '/clawdman help         this list',
 ].join('\n')
 

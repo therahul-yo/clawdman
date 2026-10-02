@@ -193,10 +193,10 @@ export const register: Register = on => {
   }
   /** what the picture says for anyone who cannot see it */
   const altText = () => {
-    if (clawd.isAsking) return 'Clawd: Claude needs you'
+    if (clawd.isAsking) return 'Clawdman: Claude needs you'
     const said = band.bubbleLeft > 0 ? band.bubble?.text : undefined
 
-    return said ? `Clawd: ${said}` : 'Clawd, a small orange mascot'
+    return said ? `Clawdman: ${said}` : 'Clawdman, a small orange mascot'
   }
   /** what the picture shows besides Clawd and the fixed scenery */
   const extras = () => ({
@@ -257,7 +257,7 @@ export const register: Register = on => {
     await $.command
       .register({
         name: 'clawdman',
-        description: 'Turn the Clawd mascot on or off; /clawdman dots or /clawdman pixels changes the scenery; /clawdman village on or off; /clawdman renderer image, blocks or auto; /clawdman status shows what it sees',
+        description: 'Turn the Clawdman mascot on or off; /clawdman dots or /clawdman pixels changes the scenery; /clawdman village on or off; /clawdman renderer image, blocks or auto; /clawdman status shows what it sees',
       })
       .catch(none)
 
@@ -430,8 +430,8 @@ export const register: Register = on => {
           })`,
           `band: ${band.isShown ? 'shown' : 'hidden'} on surface ${seen.surface || '?'}, ${band.columns} columns, ` +
             `${band.maxRows} rows allowed, survey ${seen.hasSurvey}, typing ${band.isTyping}`,
-          `Clawd: ${clawd.state}${clawd.animName ? ` (${clawd.animName})` : ''} at x ${clawd.x.toFixed(1)} px, facing ${clawd.facing}`,
-          `renders ${seen.renders}, ticks ${seen.ticks}, picture updates ${seen.blits}, clicks ${seen.clicks} (${seen.pokes} on Clawd, ${seen.walks} sent it walking)`,
+          `Clawdman: ${clawd.state}${clawd.animName ? ` (${clawd.animName})` : ''} at x ${clawd.x.toFixed(1)} px, facing ${clawd.facing}`,
+          `renders ${seen.renders}, ticks ${seen.ticks}, picture updates ${seen.blits}, clicks ${seen.clicks} (${seen.pokes} on Clawdman, ${seen.walks} sent it walking)`,
           `refused ${seen.denies} of ${seen.blits} picture updates` +
             (seen.denies ? `, last at tick ${seen.deniedAt}: ${seen.lastDeny}` : ''),
           `village ${band.isVillage ? 'on' : 'off'}: ${band.village.staged} staged, ${band.village.changed} changed; hour ${band.hour === undefined ? '?' : band.hour.toFixed(1)}`,
@@ -458,7 +458,7 @@ export const register: Register = on => {
 
       return {
         text:
-          `Clawd is drawn as ${seen.mode === 'image' ? 'a picture' : 'blocks'} (renderer ${band.renderer}). ` +
+          `Clawdman is drawn as ${seen.mode === 'image' ? 'a picture' : 'blocks'} (renderer ${band.renderer}). ` +
           'Usage: /clawdman renderer image (pictures: needs a terminal that shows them, and CLAUDE_CODE_FORCE_TERMINAL_IMAGES=1 in some), ' +
           '/clawdman renderer blocks (works everywhere), /clawdman renderer auto (decided by the terminal).',
       }
@@ -472,7 +472,7 @@ export const register: Register = on => {
 
       return {
         text: band.isVillage
-          ? 'Clawd draws a house for each changed file in the repo (staged files are brighter). /clawdman village off hides them.'
+          ? 'Clawdman draws a house for each changed file in the repo (staged files are brighter). /clawdman village off hides them.'
           : 'The village is off. /clawdman village on brings the houses back.',
       }
     }
@@ -486,8 +486,8 @@ export const register: Register = on => {
       return {
         text:
           band.breakMs > 0
-            ? `Clawd will suggest a stretch after ${Math.round(band.breakMs / 60_000)} minutes of Claude working (usage: /clawdman break 50, or /clawdman break off).`
-            : 'Clawd will not suggest stretches (turn them back on with /clawdman break 50).',
+            ? `Clawdman will suggest a stretch after ${Math.round(band.breakMs / 60_000)} minutes of Claude working (usage: /clawdman break 50, or /clawdman break off).`
+            : 'Clawdman will not suggest stretches (turn them back on with /clawdman break 50).',
       }
     }
 
@@ -500,7 +500,7 @@ export const register: Register = on => {
         $.ui.invalidate('ui.render')
       }
 
-      return { text: `Clawd's scenery is stretched to ${getFit().toFixed(3)} of the cell shape (usage: /clawdman fit 1.035; wider if it stops short of the box edges, narrower if it overshoots).` }
+      return { text: `Clawdman's scenery is stretched to ${getFit().toFixed(3)} of the cell shape (usage: /clawdman fit 1.035; wider if it stops short of the box edges, narrower if it overshoots).` }
     }
 
     if (cmd.kind === 'style') {
@@ -510,7 +510,7 @@ export const register: Register = on => {
       lastKey = ''
       $.ui.invalidate('ui.render')
 
-      return { text: `Clawd's scenery is now ${band.style === 'dots' ? 'the dotted landscape' : 'the solid pixel landscape'}.` }
+      return { text: `Clawdman's scenery is now ${band.style === 'dots' ? 'the dotted landscape' : 'the solid pixel landscape'}.` }
     }
 
     // a bare /clawdman, or on, or off: the only words that switch Clawd on or off
@@ -520,7 +520,7 @@ export const register: Register = on => {
     lastKey = ''
     $.ui.invalidate('ui.render')
 
-    return { text: `Clawd is ${band.isEnabled ? 'on' : 'off'}. Run /clawdman again to turn it ${band.isEnabled ? 'off' : 'on'}.` }
+    return { text: `Clawdman is ${band.isEnabled ? 'on' : 'off'}. Run /clawdman again to turn it ${band.isEnabled ? 'off' : 'on'}.` }
   })
 
   // The invisible layer over the picture reports clicks and hovering. A click on Clawd

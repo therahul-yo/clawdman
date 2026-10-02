@@ -8,7 +8,7 @@
     {
       "name": "clawdman",
       "source": "./",
-      "description": "Clawdman: Clawd, the Claude desktop app mascot, walks on dotted ground above the prompt box with its idle animations, a desktop while Claude works and a cheer when a turn ends. /clawdman turns it on or off.",
+      "description": "Clawdman: a small orange mascot who walks on dotted ground above the prompt box with its idle animations, sits at a desktop while Claude works and cheers when a turn ends. /clawdman turns it on or off.",
       "category": "fun",
       "tags": [
         "mascot",
