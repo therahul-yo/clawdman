@@ -83,6 +83,7 @@ No image support? Clawd shows up in **blocks** instead: same guy, chunkier meado
 | `/clawdman renderer image` · `blocks` · `auto` | force pictures, force blocks, or let your terminal decide |
 | `/clawdman fit 1.035` | stretch the meadow so its edges line up with your prompt box (pixel-perfectionists, this one's yours) |
 | `/clawdman status` | Clawd's own report: what he sees, what he's feeling, whether anything broke |
+| `/clawdman help` | list every command (a typo gets a "did you mean…?" hint and never switches him off) |
 
 ## Frequently asked, mostly by me
 
@@ -103,7 +104,7 @@ That's a pull request away.
 - Clawd's sprites are decoded from the app's own animation data.
 - The meadow is a lattice of dots painted into **one indexed-colour PNG per frame**, by a tiny PNG writer (hash-chain LZ77 + fixed Huffman, written from scratch because we like pain) that lives in the plugin.
 - Event hooks (`tool.call`, permission requests, `turn.complete`, …) pick the poses. A 3×5 pixel font draws the speech bubbles.
-- 54 tests: `claude plugin test .` · validate with `claude plugin validate .`
+- 64 tests: `claude plugin test .` · validate with `claude plugin validate .`
 
 *Made with dots, mild obsession, and a deep fear of empty space above a prompt box.*
 
