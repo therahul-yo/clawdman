@@ -17,7 +17,7 @@
 
 Your terminal was a lonely place. Just you, a blinking cursor, and a language model that never says "good morning."
 
-Now there's **Clawd**: the Claude desktop app's little mascot, walking around a dotted moonlit meadow directly above your prompt. He waves. He strolls. He sits at a laptop and *pretends* to help while Claude works. He is, frankly, doing the bare minimum, and we love him for it.
+Now there's **Clawdman**: a little orange mascot walking around a dotted, moonlit meadow directly above your prompt. He waves. He strolls. He sits at a laptop and *pretends* to help while Claude works. He is, frankly, doing the bare minimum, and we love him for it.
 
 > *Unofficial fan mod. Not made by, endorsed by, or related to Anthropic. Clawd's moves are the ones from the Claude desktop app, lovingly borrowed. Please don't send this to legal.*
 
