@@ -1,0 +1,19 @@
+{
+  "name": "clawdman",
+  "version": "0.2.0",
+  "description": "Clawdman: Clawd, the Claude desktop app mascot, walks on dotted ground above the prompt box with its idle animations, a desktop while Claude works and a cheer when a turn ends. /clawdman turns it on or off.",
+  "author": {
+    "name": "therahul-yo",
+    "url": "https://github.com/therahul-yo"
+  },
+  "repository": "https://github.com/therahul-yo/clawdman",
+  "homepage": "https://github.com/therahul-yo/clawdman",
+  "keywords": [
+    "mascot",
+    "prompt",
+    "terminal",
+    "ui",
+    "mod"
+  ],
+  "displayName": "Clawdman"
+}
