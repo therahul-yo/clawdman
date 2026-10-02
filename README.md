@@ -1,6 +1,7 @@
-<h1><img src="docs/icon-128.png" alt="" width="64" height="64" align="center">&nbsp;Clawdman</h1>
+<p align="center"><img src="docs/icon-128.png" alt="Clawd, a small orange mascot" width="96" height="96"></p>
+<h1 align="center">Clawdman</h1>
 
-*a tiny orange guy who lives on top of your prompt box and has opinions.*
+<p align="center"><em>a tiny orange guy who lives on top of your prompt box and has opinions.</em></p>
 
 <p align="center"><img src="docs/scene-night.png" alt="Night: a village of changed files and a done bubble" width="100%"></p>
 <p align="center"><sub>Night: a house for every changed file, and how long the turn took.</sub></p>
