@@ -3,6 +3,7 @@ import type { Register } from 'claude-code'
 import { activityOf } from './activity'
 import { Asks } from './asks'
 import { clickKind } from './clicks'
+import { HELP, parseCommand } from './commands'
 import { Companion } from './engine'
 import { REFUSED_BACKOFF_MS, shouldUseBlocks } from './fallback'
 import type { BubbleTone, SceneStyle } from './render'
@@ -380,9 +381,24 @@ export const register: Register = on => {
   })
 
   on('command.run', { command: 'clawdman' }, async ($, e) => {
-    const word = e.args.trim().toLowerCase()
+    const cmd = parseCommand(e.args)
 
-    if (word === 'status') {
+    if (cmd.kind === 'help') return { text: HELP }
+
+    if (cmd.kind === 'unknown') {
+      return {
+        text:
+          `Clawdman does not know "${cmd.word}"` +
+          (cmd.suggestion ? `. Did you mean /clawdman ${cmd.suggestion}?` : '.') +
+          ' Nothing was changed; /clawdman help lists the commands.',
+      }
+    }
+
+    if (cmd.kind === 'invalid') {
+      return { text: `"${cmd.got}" is not a valid choice for /clawdman ${cmd.command}. Usage: ${cmd.usage}. Nothing was changed.` }
+    }
+
+    if (cmd.kind === 'status') {
       return {
         text: [
           `clawdman: ${band.isEnabled ? 'on' : 'off'}, renderer ${seen.mode || 'not chosen yet'} (${
@@ -402,11 +418,10 @@ export const register: Register = on => {
       }
     }
 
-    if (word.startsWith('renderer')) {
-      const text = word.slice(8).trim()
-      if (text === 'image' || text === 'blocks' || text === 'auto') {
-        band.renderer = text
-        await $.store.set('renderer', text)
+    if (cmd.kind === 'renderer') {
+      if (cmd.value !== undefined) {
+        band.renderer = cmd.value
+        await $.store.set('renderer', cmd.value)
         choose(lastEnv ?? (await readEnv($)))
         // start afresh: whatever made the last renderer give up no longer counts
         seen.streak = 0
@@ -425,14 +440,11 @@ export const register: Register = on => {
       }
     }
 
-    if (word.startsWith('village')) {
-      const text = word.slice(7).trim()
-      if (text === 'on' || text === 'off' || text === '') {
-        band.isVillage = text === '' ? !band.isVillage : text === 'on'
-        await $.store.set('village', band.isVillage)
-        polls.git = 0
-        lastKey = ''
-      }
+    if (cmd.kind === 'village') {
+      band.isVillage = cmd.value === 'toggle' ? !band.isVillage : cmd.value === 'on'
+      await $.store.set('village', band.isVillage)
+      polls.git = 0
+      lastKey = ''
 
       return {
         text: band.isVillage
@@ -441,12 +453,10 @@ export const register: Register = on => {
       }
     }
 
-    if (word.startsWith('break')) {
-      const text = word.slice(5).trim()
-      const minutes = text === 'off' ? 0 : Number.parseFloat(text)
-      if (Number.isFinite(minutes) && minutes >= 0) {
-        band.breakMs = minutes * 60_000
-        await $.store.set('breakMinutes', minutes)
+    if (cmd.kind === 'break') {
+      if (cmd.minutes !== undefined) {
+        band.breakMs = cmd.minutes * 60_000
+        await $.store.set('breakMinutes', cmd.minutes)
       }
 
       return {
@@ -457,10 +467,9 @@ export const register: Register = on => {
       }
     }
 
-    if (word.startsWith('fit')) {
-      const value = Number.parseFloat(word.slice(3))
-      if (Number.isFinite(value)) {
-        setFit(value)
+    if (cmd.kind === 'fit') {
+      if (cmd.value !== undefined) {
+        setFit(cmd.value)
         await $.store.set('fit', getFit())
         band.epoch += 1
         lastKey = ''
@@ -470,17 +479,18 @@ export const register: Register = on => {
       return { text: `Clawd's scenery is stretched to ${getFit().toFixed(3)} of the cell shape (usage: /clawdman fit 1.035; wider if it stops short of the box edges, narrower if it overshoots).` }
     }
 
-    if (word === 'dots' || word === 'pixels' || word === 'style') {
-      band.style = word === 'pixels' || (word === 'style' && band.style === 'dots') ? 'pixels' : 'dots'
+    if (cmd.kind === 'style') {
+      band.style = cmd.value === 'toggle' ? (band.style === 'dots' ? 'pixels' : 'dots') : cmd.value
       await $.store.set('style', band.style)
       band.epoch += 1
       lastKey = ''
       $.ui.invalidate('ui.render')
 
-      return { text: `Clawd's scenery is now ${band.style === 'dots' ? 'the dotted claude.dev landscape' : 'the solid pixel landscape'}.` }
+      return { text: `Clawd's scenery is now ${band.style === 'dots' ? 'the dotted landscape' : 'the solid pixel landscape'}.` }
     }
 
-    band.isEnabled = word === 'on' ? true : word === 'off' ? false : !band.isEnabled
+    // a bare /clawdman, or on, or off: the only words that switch Clawd on or off
+    band.isEnabled = cmd.kind === 'enable' ? cmd.on : !band.isEnabled
     await $.store.set('enabled', band.isEnabled)
     band.epoch += 1
     lastKey = ''
