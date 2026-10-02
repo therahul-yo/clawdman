@@ -1,7 +1,9 @@
-<p align="center"><img src="docs/icon-128.png" alt="Clawdman, a small orange mascot in a red cape" width="96" height="96"></p>
+<p align="center"><img src="docs/icon-header.png" alt="Clawdman, a small orange mascot in a red cape" width="110"></p>
 <h1 align="center">Clawdman</h1>
 
 <p align="center"><em>a tiny orange guy who lives on top of your prompt box and has opinions.</em></p>
+
+<p align="center"><a href="https://clawdman.vercel.app">clawdman.vercel.app</a> · <a href="docs/clawdman.mp4">watch the tour</a></p>
 
 <p align="center"><a href="docs/clawdman.mp4"><img src="docs/clawdman-poster.jpg" alt="Watch the 37 second Clawdman tour" width="100%"></a></p>
 <p align="center"><sub>&#9654; Watch the 37-second tour. Every picture of the meadow in it is rendered by the plugin's own engine.</sub></p>
