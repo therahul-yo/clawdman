@@ -5,8 +5,11 @@
 
 <p align="center"><a href="https://clawdman.vercel.app">clawdman.vercel.app</a> · <a href="docs/clawdman.mp4">watch the tour</a></p>
 
-<p align="center"><a href="docs/clawdman.mp4"><img src="docs/tour-poster.jpg" alt="Watch the 37 second Clawdman tour" width="100%"></a></p>
+<p align="center"><a href="docs/clawdman.mp4"><img src="docs/tour.jpg" alt="Watch the 37 second Clawdman tour" width="100%"></a></p>
 <p align="center"><sub>&#9654; Watch the 37-second tour. Every picture of the meadow in it is rendered by the plugin's own engine.</sub></p>
+
+<p align="center"><img src="docs/clawdman-walk.gif" alt="Clawdman walking across the dotted meadow at night" width="100%"></p>
+<p align="center"><sub>He really does walk. Click the ground and he walks over there.</sub></p>
 
 
 <p align="center"><img src="docs/scene-night.png" alt="Night: a village of changed files and a done bubble" width="100%"></p>
