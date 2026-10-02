@@ -64,6 +64,12 @@ claude --plugin-dir /path/to/clawdman
 
 Needs Claude Code 2.1.287 or newer (that's when mods arrived).
 
+**Or let your agent do it.** Paste this into Claude Code, Codex or any coding agent:
+
+```
+Set up Clawdman (https://github.com/therahul-yo/clawdman) for me in Claude Code. Run `claude plugin marketplace add therahul-yo/clawdman`, then `claude plugin install clawdman@clawdman`. Then add `"env": { "CLAUDE_CODE_FORCE_TERMINAL_IMAGES": "1" }` to ~/.claude/settings.json and keep everything already in that file. When you are done, tell me to restart Claude Code and run `/clawdman status`, which should say renderer image.
+```
+
 Clawd's meadow is an actual image, so your terminal has to be one that can show images (Ghostty, kitty, WezTerm and Herdr all can). Claude Code is shy about drawing them unless you say it's okay, so add this once to `~/.claude/settings.json`:
 
 ```json
